@@ -23,5 +23,5 @@ class Kingdom(object):
 		self.reply = self.toolbox.message_decoder(secret_message)
 
 	def send_reply(self):
-		return self.reply 
+		return self.reply
 		
