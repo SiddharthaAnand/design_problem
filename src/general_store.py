@@ -18,8 +18,7 @@ class GeneralStore(object):
 				else:
 					self.message_frequency_store[val] += 1
 
-	def message_decoder(self, kingdom, message):
-		emblem = kingdom.get_emblem()
+	def message_decoder(self, message):
 		friend = True
 		store_frequency("emblem", message)
 		store_frequency("message", message)
