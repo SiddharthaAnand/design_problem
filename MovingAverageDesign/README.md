@@ -4,15 +4,10 @@ A class design which calculates moving average of N real numbers in a stream of 
 
 ## How to do it?
 
-[Continuous stream for reading inputs]  <----   user input
-              |
-              |
-              |
-            \ | /
-              -
-       [Update moving average]
+A listener which will keep reading inputs.
 
- No need for storing all the numbers in the memory. 
+No need for storing all the numbers in the memory. 
+
 ## Formula
 
 The formula used
@@ -26,4 +21,5 @@ Methods
  - void updateMovingAverage(double newNumber)
  - void streamInput()
  - double returnCurrentAverage()
+ - Getter methods
 
