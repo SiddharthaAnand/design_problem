@@ -1,6 +1,6 @@
 # Moving Average Calculator
 
-A class design which calculates moving average of N real numbers in a stream of numbers.
+A class design which calculates moving average of all real numbers in a stream of numbers.
 
 ## How to do it?
 
