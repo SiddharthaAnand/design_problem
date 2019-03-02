@@ -15,6 +15,13 @@ class LastNAverage {
 		full = false;
 	}
 
+	public void printStore() {
+		System.out.println();
+		for (int idx = 0; idx < size; idx++) {
+			System.out.print(array[idx] + " ");
+		}
+		System.out.println();
+	}
 	public double getAverage() {
 		return average;
 	}
@@ -41,9 +48,12 @@ class LastNAverage {
 public class AverageController {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
+		System.out.print("Enter value of N: ");
 		int n = sc.nextInt();
+
 		LastNAverage avg = new LastNAverage(n);
 		while (true) {
+			System.out.print("Enter 1/2/3 for insert/getAverage/printStorage " );
 			int val = sc.nextInt();
 			switch (val) {
 				case 1:
@@ -53,6 +63,8 @@ public class AverageController {
 				case 2:
 					System.out.println("Last N elements average: " + avg.getAverage());
 					break;
+				case 3:
+					avg.printStore();
 				default:
 					break;
 			}
