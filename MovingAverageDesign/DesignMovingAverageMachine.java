@@ -1,5 +1,6 @@
-/* Design Problem: Design a class to calculate moving average of last N numbers in a stream of 
+/* Design Problem: Design a class to calculate moving average of all numbers in a stream of 
  * real numbers.
+ * Returns the current average in O(1) time.
  */
 
 import java.util.Scanner;
