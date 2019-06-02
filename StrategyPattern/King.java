@@ -1,6 +1,8 @@
+// Implements(not java terminology) the Character.
 
 class King extends Character {
-    public static void main(String[] args) {
-
+    public void fight() {
+        //setWeapon();
+        weapon.useWeapon();
     }
 }
