@@ -47,6 +47,7 @@ class LRUCache {
 		return (currentSize == size);
 	}
 
+	// Adds a new node at the tail end
 	public boolean addNodeAtEnd(Node node) {
 		if (node == null) {
 			return false;
@@ -58,12 +59,18 @@ class LRUCache {
 
 		}
 		// Add node if a single node present
-		else {
+
+		else if (currentSize < size) {
 			tail.next = node;
 			node.prev = tail;
 			tail = tail.next;
+			currentSize += 1;
 		}
-		currentSize += 1;
+		else {
+			evictFromList();
+			currentSize -= 1;
+			return addNodeAtEnd(node);
+		}
 		map.put(node.data, node);
 		return true;
 	}
@@ -77,38 +84,53 @@ class LRUCache {
 		System.out.println();
 	}
 
+	// update the node position of value already present in cache linked list.
 	private void updateInCache(int access) {
 		Node pointerToBlock = map.get(access);
 		if (currentSize == 1) {
 			// do nothing
 		}
+		else if (tail == pointerToBlock) {
+			return;
+		}
 		// if the access is at the head then swap that.
-		if (tail.data != access && currentSize == 2) {
+		else if (head.data == access && currentSize == 2) {
 			Node tmp = head;
-			tail.next = head;
-			tail.prev = null;
-			head.prev = tail;
-			head.next = null;
-			head = tail;
-			tail = tmp;
+			head.data = tail.data;
+			tail.data = tmp.data;
 		}
 		else {
+			// pointertoblock is same as head
+			if (head.data == access) {
+				head = pointerToBlock.next;
+			}
 			if (pointerToBlock.next != null) {
 				pointerToBlock.next.prev = pointerToBlock.prev;
-				pointerToBlock.next = null;
 			}
 			if (pointerToBlock.prev != null) {
 				pointerToBlock.prev.next = pointerToBlock.next;
-				pointerToBlock.prev = tail;
-			}
-			else {
-				head = head.next;
 			}
 			tail.next = pointerToBlock;
+			pointerToBlock.prev = tail;
+			pointerToBlock.next = null;
 			tail = pointerToBlock;
 		}
 	}
 
+	// This removes the node form the head since it is the least
+	// recently used block.
+	private void evictFromList() {
+		if (head == null) {
+			return;
+		}
+		else {
+			Node tmp = head;
+			head = head.next;
+			head.prev = null;
+			tmp.next = null;
+			tmp = null;
+		}
+	}
 	private void insertIntoCache(int access) {
 		Node newNode = new Node(access);
 		addNodeAtEnd(newNode);
