@@ -1,6 +1,7 @@
 
 import java.util.Scanner;
 import java.util.HashMap;
+import java.util.Map;
 
 class LRUCache {
 
@@ -66,6 +67,8 @@ class LRUCache {
 			tail = tail.next;
 			currentSize += 1;
 		}
+		// if the cache is full -> remove the least recently used 
+		// and call this method again to add the node at the end.
 		else {
 			evictFromList();
 			currentSize -= 1;
@@ -84,25 +87,32 @@ class LRUCache {
 		System.out.println();
 	}
 
+	private void updateAtHead() {
+		Node tmp = head;
+		head = head.next;
+		head.prev = null;
+		tmp.next = null;
+		tail.next = tmp;
+		tmp.prev = tail;
+		tail = tmp;
+	}
+
 	// update the node position of value already present in cache linked list.
 	private void updateInCache(int access) {
 		Node pointerToBlock = map.get(access);
 		if (currentSize == 1) {
 			// do nothing
+			return;
 		}
 		else if (tail == pointerToBlock) {
 			return;
 		}
 		// if the access is at the head then swap that.
-		else if (head.data == access && currentSize == 2) {
-			Node tmp = head;
-			head.data = tail.data;
-			tail.data = tmp.data;
-		}
 		else {
 			// pointertoblock is same as head
 			if (head.data == access) {
-				head = pointerToBlock.next;
+				updateAtHead();
+				return;
 			}
 			if (pointerToBlock.next != null) {
 				pointerToBlock.next.prev = pointerToBlock.prev;
@@ -124,6 +134,7 @@ class LRUCache {
 			return;
 		}
 		else {
+			map.remove(head.data);
 			Node tmp = head;
 			head = head.next;
 			head.prev = null;
@@ -153,6 +164,13 @@ class LRUCache {
 	public void start(int access) {
 		this.checkIfPresentInCache(access);
 		this.printNodes();
+		this.printMap();
+	}
+
+	public void printMap() {
+		for (Map.Entry<Integer, Node> e: map.entrySet()) {
+			System.out.println(e.getKey() + " " + e.getValue());
+		}
 	}
 
 }
